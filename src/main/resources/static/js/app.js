@@ -2,6 +2,7 @@ var Module =( function (){
 	
 	var planodesplegado  = false;
  	var puntosnuevos={author: null,name: null,points: []};
+	var planosnuevos=[];
 
 	var sumaDePuntos = function(total,num){
 		return total+num;
@@ -9,8 +10,8 @@ var Module =( function (){
 	
 	var mapeador = function(plano){
 		if(plano){
-				
-				
+				planosnuevos=plano;
+
 				$("#BP tbody").empty();
 				
                 var objetos = plano.map(function (plane){
@@ -47,9 +48,14 @@ var Module =( function (){
 	var graficador = function(plano,nombre){
 		if (plano){
 			if (nombre){
-				 plano = plano.filter(Boolean);
 				
+				
+				 plano = plano.filter(Boolean);
+			
 				puntosnuevos=plano[0];
+				
+			
+				
 				var objeto = plano.map(function (plane){
 					if (plane.name==nombre){
 
@@ -157,7 +163,7 @@ var Module =( function (){
 	var actualizarPlano = function(){
 		var author = document.getElementById("author").value;
 		var name =  document.getElementById("planename").innerText ;
-		blueprintGet().then(updateBlueprint);
+		updateBlueprint().then(blueprintGet);
 		puntosnuevos={author: null,name: null,points: []};
 		
 	};
@@ -169,14 +175,15 @@ var Module =( function (){
 		var author = document.getElementById("author").value;
 		var name =  document.getElementById("planename").innerText ;
 		
+		
         var putPromise = $.ajax({
-            url: "/blueprints/"+author+"/"+name,
+            url: "http://localhost:8080/blueprints/"+author+"/"+name,
             type: 'PUT',    
             data: JSON.stringify(puntosnuevos),
-            dataType: 'application/json',
+            contentType: 'application/json',
         });
 
-        var putPromise.then(
+        putPromise.then(
                 function () {
                     console.info("OK");
                 },
@@ -190,13 +197,16 @@ var Module =( function (){
     };
 
     var blueprintGet = function () {
-		
 		var author = document.getElementById("author").value;
+		var name =  document.getElementById("planename").innerText ;
         var promise = $.get("http://localhost:8080/blueprints/"+author);
 
         promise.then(
                 function (data) {
+					
                    mapeador(data);
+				   apiclient.getBlueprintsByNameAndAuthor(author,name,graficador);
+					
                 },
                 function () {
                     alert("$.get failed!");
@@ -204,6 +214,52 @@ var Module =( function (){
         );
 
         return promise;
+    };
+	
+	var newBlueprintName = function ()
+	{
+		if (document.getElementById("bpname").innerText!=""){
+			var opcion = prompt("New Blueprint Name:", "");
+			document.getElementById("planename").innerHTML = opcion;
+			 newBlueprint(opcion).then(blueprintGet);
+			
+		}
+		else
+		{
+			alert("Debe de haber un autor al que asignarle el Blueprint");
+		}
+		
+		
+
+	};
+	
+	
+	
+	var newBlueprint = function (nombre) {
+		var autor = document.getElementById("author").value;
+		//var nombre =  document.getElementById("planename").innerText ;
+		var nuevoplano={author: autor,name: nombre,points: []};
+		planosnuevos.push(nuevoplano);
+		alert(JSON.stringify(planosnuevos));
+		
+        var putPromise = $.ajax({
+            url: "http://localhost:8080/blueprints/"+autor,
+            type: 'PUT',    
+            data: JSON.stringify(planosnuevos),
+            contentType: 'application/json',
+        });
+
+        putPromise.then(
+                function () {
+                    console.info("OK");
+                },
+                function () {
+                    console.info("ERROR");
+                }
+
+        );
+
+        return putPromise;
     };
 	
 	
@@ -214,6 +270,7 @@ var Module =( function (){
 		porAutor: porAutor,
 		porAutorYNombre: porAutorYNombre,
 		init: init,
-		actualizarPlano: actualizarPlano
+		actualizarPlano: actualizarPlano,
+		newBlueprintName: newBlueprintName
 	};
 })();

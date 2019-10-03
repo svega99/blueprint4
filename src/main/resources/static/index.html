@@ -81,13 +81,18 @@ header {
 	<h3>Total user points: <span id="userPoints"></span></h3>
 	  </div>
 	
-	  <div class="column right">
+	  <div class="column right" id="columnaIzquierda">
 		
 	    <h3>Current blueprint: <span id="planename"></span></h3>
+		
+		<p><button type="button" onclick="Module.newBlueprintName()">Create new Blueprint</button></p>
+		<p>
+		<div id="divcanvas">
 		<canvas  width="500" height="250" style="border:1px solid #000000;"  id="blueprintDraw">
 			Your browser does not support the HTML5 canvas tag.
 			</canvas>
-			</br>
+			</p>
+		</div>
 		<button type="button"  onclick="Module.actualizarPlano()">Save/Update</button>
 	  </div>
 	</div>

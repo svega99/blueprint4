@@ -31,8 +31,7 @@ var apiclient = (function () {
 	
     return {
       getBlueprintsByAuthor: getBlueprintsByAuthor,
-	  getBlueprintsByNameAndAuthor: getBlueprintsByNameAndAuthor,
-	  updateBlueprint: updateBlueprint
+	  getBlueprintsByNameAndAuthor: getBlueprintsByNameAndAuthor
     };
   
   })();
