@@ -8,6 +8,8 @@
     <script src="/webjars/bootstrap/4.1.2/js/bootstrap.min.js"></script>
 	<script src="js/apimock.js"></script>
 	<script src="js/app.js"></script>
+	<script src="js/apiclient.js"></script>
+
     <link rel="stylesheet"
       href="/webjars/bootstrap/4.1.2/css/bootstrap.min.css" />
       
@@ -46,7 +48,7 @@ header {
 	  
 </head>
 
-<body>
+<body onLoad="Module.init()">
 	<header>
 		<h2>Blueprints</h2>
 	
@@ -80,10 +82,13 @@ header {
 	  </div>
 	
 	  <div class="column right">
+		
 	    <h3>Current blueprint: <span id="planename"></span></h3>
-		<canvas id="blueprintDraw" width="500" height="250" style="border:1px solid #000000;">
+		<canvas  width="500" height="250" style="border:1px solid #000000;"  id="blueprintDraw">
 			Your browser does not support the HTML5 canvas tag.
 			</canvas>
+			</br>
+		<button type="button"  onclick="Module.actualizarPlano()">Save/Update</button>
 	  </div>
 	</div>
 	
