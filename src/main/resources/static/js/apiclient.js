@@ -22,11 +22,7 @@ var apiclient = (function () {
 	  
 	  
 	  
-	  
-	  
 	 
-	  
-	  
 	  
 	
     return {

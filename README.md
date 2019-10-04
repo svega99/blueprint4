@@ -10,6 +10,15 @@
 	*	The point is added at the end of the sequence of points on the current canvas (only in the application memory, NOT EVEN IN THE API!). 
 
 	*	The drawing is repainted. 
+	
+	Se añade un evento que captura los clicks en el canvas.
+	
+	![Alt text](img/1.PNG)
+	
+	Los puntos quedan grabados en el canvas.
+	
+	![Alt text](img/2.PNG)
+
 
 *	Add the Save/Update button. Respecting the client's current module architecture, do that by pressing the button:
 
@@ -19,13 +28,25 @@
 
 	*	The total points of the user are recalculated. 
 
-
-	*	For this note that the 'data' property of the object sent to $.ajax must be a jSON object (in text format). If the data you want to send is a JavaScript object, you can convert it to jSON with:
-
-​
-
-
-	*	As in this case there are three operations based on callbacks, and that they need to be performed in a specific order, consider how to use JavaScript promises using any of the available examples.
+	Se crea una nueva funcion que usa "promises" para ejecutar primero el PUT y de inmediato el GET en el momento que se llama al boton Save/Update.
+	
+	![Alt text](img/3.PNG)
+	
+	Funcion que implementa el PUT
+	
+	![Alt text](img/4.PNG)
+	
+	Funcion que implementa el GET
+	
+	![Alt text](img/5.PNG)
+	
+	Momento antes de llamar al boton Save/Update.
+	
+	![Alt text](img/6.PNG)
+	
+	Momento despues de llamar al boton Save/Update.
+	
+	![Alt text](img/7.PNG)
 
 *	Add the 'Create new blueprint' button, so that when pressed:
 
@@ -35,10 +56,40 @@
 
 	*	This option should change the way the 'save / update' option works, because in this case, when pressed the first time you should (also, using promises):
 
-	*	Post the resource / blueprints to create the new plan. GET to this same resource, to update the list of plans and the user's score. 
+		*	Post the resource / blueprints to create the new plan. GET to this same resource, to update the list of plans and the user's score. 
+	
+	Funcion que usa "promises" para ejecutar primero el POST y de inmediato el GET en el momento que se le da un nombre al nuevo Blueprint.
+	
+	![Alt text](img/8.PNG)
+	
+	Funcion que implementa el POST.
+	
+	![Alt text](img/9.PNG)
+	
+	Momento en que se pide el nombre del nuevo Blueprint.
+	
+	![Alt text](img/10.PNG)
+	
+	Nuevo Blueprint en blanco.
+	
+	![Alt text](img/11.PNG)
+	
 
 *	Add the 'DELETE' button, so that (also with promises):
 
 	*	Delete the canvas. DELETE the corresponding resource. 
 
 	*	Make GET of the plans now available.
+	
+	
+	Funcion que usa "promises" para ejecutar primero el DELETE y de inmediato el GET en el momento que se llama al boton DELETE.
+	
+	![Alt text](img/12.PNG)
+	
+	Funcion que implementa el DELETE.
+	
+	
+	![Alt text](img/13.PNG)
+	
+	
+	

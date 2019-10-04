@@ -237,15 +237,15 @@ var Module =( function (){
 	
 	var newBlueprint = function (nombre) {
 		var autor = document.getElementById("author").value;
-		//var nombre =  document.getElementById("planename").innerText ;
+
 		var nuevoplano={author: autor,name: nombre,points: []};
-		planosnuevos.push(nuevoplano);
-		alert(JSON.stringify(planosnuevos));
+
+		
 		
         var putPromise = $.ajax({
-            url: "http://localhost:8080/blueprints/"+autor,
-            type: 'PUT',    
-            data: JSON.stringify(planosnuevos),
+            url: "http://localhost:8080/blueprints/",
+            type: 'POST',    
+            data: JSON.stringify(nuevoplano),
             contentType: 'application/json',
         });
 
@@ -264,6 +264,34 @@ var Module =( function (){
 	
 	
 	
+	var deletePlano = function(){
+		var author = document.getElementById("author").value;
+		var name =  document.getElementById("planename").innerText ;
+		alert(JSON.stringify(puntosnuevos));
+		var deletePromise = $.ajax({
+            url: "http://localhost:8080/blueprints/"+author+"/"+name,
+            type: 'DELETE',  
+			data: JSON.stringify(puntosnuevos),
+            contentType: 'application/json',
+        });
+
+        deletePromise.then(
+                function () {
+                    console.info("OK");
+                },
+                function () {
+                    console.info("ERROR");
+                }
+
+        );
+
+        return deletePromise;
+	};
+	
+	var borrarPlano = function(){
+		deletePlano().then(blueprintGet);
+		
+	};
 	
 	
 	return {
@@ -271,6 +299,7 @@ var Module =( function (){
 		porAutorYNombre: porAutorYNombre,
 		init: init,
 		actualizarPlano: actualizarPlano,
-		newBlueprintName: newBlueprintName
+		newBlueprintName: newBlueprintName,
+		borrarPlano: borrarPlano
 	};
 })();
